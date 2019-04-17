@@ -1,0 +1,38 @@
+public class 猜数字 {
+	public static void main(String[] args) {
+		Random r=new Random();
+		for(;;) {
+			System.out.println("*****输1开始******");
+			System.out.println("*****************");
+			System.out.println("*****输0结束******");
+			Scanner a= new Scanner(System.in);
+			int b=a.nextInt();
+			if(b==1)
+			{
+				System.out.println("请输入一个0-100的整数:\n");
+			}
+			else if(b==0)
+			{
+				break;
+			}
+			int t = r.nextInt(101);//得到随机数
+		
+		Scanner s= new Scanner(System.in);
+		for(;;) {
+		int t1= s.nextInt();//接收输入
+		
+		if(t==t1) {
+			System.out.println("猜对了");
+			break;
+		}else {
+			if(t>t1) {
+				System.out.println("猜小了");
+			}else {
+				System.out.println("猜大了");
+			}
+				
+		}
+		}
+		}
+	}
+}
