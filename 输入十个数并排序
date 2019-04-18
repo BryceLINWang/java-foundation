@@ -1,0 +1,23 @@
+	public static void main(String[] args) {
+      Random r= new Random();
+		int []a=new int[10];
+		int i;
+		for(i=0; i<10;i++)
+		{
+			a[i] = r.nextInt(101);	
+		}
+		Arrays.sort(a);
+		for(i=0;i<10;i++) {
+			for(int j=i+1;j<10;j++) {
+				if(a[i]>a[j]) {
+					int tmp=a[i];
+					a[i]=a[j];
+					a[j]=tmp;
+					
+				}
+			}
+			System.out.println(a[i]);
+		}
+		
+	}
+}
