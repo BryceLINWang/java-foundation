@@ -1,0 +1,27 @@
+package test;
+
+import java.util.Scanner;
+
+public class zuoye {
+	public static void main(String[] args) {
+		Scanner s= new Scanner(System.in);
+		int []a= new int[3];
+		System.out.println("输入任意三个整数：\n");
+		for(int i=0;i<3;i++) {
+			a[i] =s.nextInt();
+		}//从键盘输入三个整数
+	for(int i=0;i<3-1;i++) {
+		for(int j=0;j<3-1-i;j++) {//-i提高效率，从大到小则每次排列后第一个数已为最大
+			if(a[j] <a[j+1]) {
+                int temp = a[j];
+                a[j] = a[j + 1];
+                a[j+1] = temp;
+            }
+
+		}
+	}
+	for(int i=0;i<3;i++) {
+		System.out.println(a[i]);
+	}//输出排序后数组
+	}
+}
