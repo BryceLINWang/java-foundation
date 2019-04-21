@@ -1,0 +1,15 @@
+import java.util.Scanner;
+
+public class 阶乘 {
+static int jiecheng(int n) {
+	if(n==1) return 1;
+	return  n*jiecheng(n-1);
+}
+	public static void main(String[] args) {
+		Scanner s =new Scanner(System.in);
+		System.out.println("输入你想要的整数：\n");
+		int n =s.nextInt();
+        System.out.println(+n+"的阶乘为"+jiecheng(n));
+	}
+
+}
