@@ -1,0 +1,21 @@
+import java.util.Scanner;
+
+public class 汉诺塔 {
+static void hannuo(int n,String a,String b,String c) {
+	if(n==1) {
+		System.out.println("把第"+1+"个盘子从"+a+"移动到"+c);
+	}
+	else {
+	hannuo(n-1,a,c,b);
+	System.out.println("把第"+n+"个盘子从"+a+"移动到"+c);
+	hannuo(n-1,b,a,c);
+}
+	}
+	public static void main(String[] args) {
+		Scanner s =new Scanner(System.in);
+		System.out.println("输入你想要的整数n：\n");
+		int n =s.nextInt();
+		hannuo(5,"A","B","C");
+	}
+
+}
