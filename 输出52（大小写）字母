@@ -1,0 +1,14 @@
+public class testt {
+
+	public static void main(String[] args) {
+  //
+//	System.out.println((int)'z');	//可输出ASCII码值
+		for(char a='a';a<='z';a++) {
+			System.out.print(a+" ");
+		}
+		for(char a='A';a<='Z';a++) {
+			System.out.print(a+" ");
+		}
+	}
+
+}
