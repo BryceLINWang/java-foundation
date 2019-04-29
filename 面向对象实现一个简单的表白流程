@@ -1,0 +1,67 @@
+如果她尚未经历世事（比你小），那便带她去看世界
+如果她看尽人世繁华（比你大），那便带她坐旋转木马
+public class Student {
+  private String name;
+  private String sex;
+  private int age;
+
+public Student(String name,String sex,int age) {
+	  this.name=name;
+	  this.sex=sex;
+	  this.age=age;
+  }
+  public void biaobai(Student p) {
+	  if(p.sex.equals(this.sex)) {
+		  System.out.println(p.name+"委婉拒绝");
+	  }
+	  else {
+	  if(p.age<this.age) {
+		  System.out.println(this.name+"带"+p.name+"看世界");
+		  System.out.println(p.name+"考虑");
+	  }
+	  if(p.age>=this.age) {
+		  System.out.println(this.name+"带"+p.name+"坐旋转木马");
+		  System.out.println(p.name+"考虑");
+	  }
+	  }
+  }
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+  
+}
+
+import java.util.Scanner;
+
+public class 过程 {
+
+	public static void main(String[] args) {
+		Scanner s=new Scanner(System.in);
+		Scanner s1=new Scanner(System.in);
+		
+		Student p1=new Student(s.nextLine(),s.nextLine(),s.nextInt());
+		Student p2=new Student(s1.nextLine(),s1.nextLine(),s1.nextInt());
+		p1.biaobai(p2);
+	}
+
+}
