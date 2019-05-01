@@ -1,0 +1,29 @@
+package 动态规划;
+
+public class DP {
+	//动态规划（备忘录）
+ public static int f(int n) {
+	 if(n==0) {
+		 return 1;
+	 }
+	 if(n ==1) {
+		 return 1;
+	 }
+	 int m1=1;
+	 int m2=1;
+	 int result=0;
+	 int i=2;
+	while(i<n){
+		result =m1+m2;
+		m1=m2;
+		m2=result;
+		++i;
+	}
+	 return result;
+ }
+ public static void main(String[] args) {
+	int n=7;
+	
+	System.out.println(f(n));
+}
+}
