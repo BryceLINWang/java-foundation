@@ -1,0 +1,31 @@
+package test;
+
+import java.util.Scanner;
+
+public class paiLie {
+	public static void paiLie(char[]a,int i){  
+		if(i==a.length-1){//每次排列前检测输出
+            System.out.println(new String(a)); 
+            return;
+        }
+		else {
+			for(int j=i;j<=a.length-1;j++) {
+				char tmp=a[j];//从第一个字符开始，先固定，交换后面的字符
+				a[j] = a[i];
+				a[i] = tmp;
+				paiLie(a,i+1);//对下一个字符重复上述操作
+				tmp=a[j];//继续下一轮
+				a[j] = a[i];
+				a[i] = tmp;
+			}
+		}
+	}
+	public static void main(String[] args) {
+		Scanner s=new Scanner(System.in);
+		System.out.println("输入一个字符串：");
+		String l=s.nextLine();//输入字符串
+		char []a=l.toCharArray();//转化成数组
+		paiLie(a, 0);
+	}
+
+}
