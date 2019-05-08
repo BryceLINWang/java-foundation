@@ -1,0 +1,19 @@
+package test;
+
+import java.util.Scanner;
+
+public class 求和 {
+	public static int Qiuhe(int n) {
+		if(n>0) {
+			return n+Qiuhe(n-1);
+		}
+		else
+		return 0;
+	}
+public static void main(String[] args) {
+	Scanner s=new Scanner(System.in);
+	int n=s.nextInt();
+	int z=Qiuhe(n);
+	System.out.println("1——"+n+"的和为"+z);
+}
+}
