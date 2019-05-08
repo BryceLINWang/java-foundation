@@ -1,0 +1,43 @@
+ 1.某游戏规则中，甲乙双方每个回合的战斗总是有一方胜利，一方失败。 游戏规定失败的一方要把自己的体力值的1/4加给胜利的一方。例如如果双方体力值当前都是4,则经过一轮战斗后，双方的体力值会变为: 5.3.
+
+      现在已知:双方开始时的体力值甲: 1000 乙: 2000
+      假设战斗中，甲乙获胜的概率都是50％
+
+      求解双方经过4个回合的战斗，体力值之差小于1000的理论概率。
+package 蓝桥杯;
+
+public class Fight {
+	public static double a=1000.0;
+	public static double b=2000.0;
+		public	static int count=0;
+
+	public static void Fight(int i) {
+		double m,n;//定义局部变量用来存放数据
+		if(i>=4) {
+			if(Math.abs(a-b) < 1000) {//体力值相差1000
+				count++;//计数器
+				return;
+			}
+	
+		}
+		else {
+			m=a;
+			n=b;//存数据
+			a=a+b/4;
+			b=b*3/4;//甲赢
+			Fight(i+1);//下一回合
+			a=m;
+			b=n;
+			b=b+a/4;
+			a=a*3/4;//乙赢
+			Fight(i+1);//下一回合
+		}
+
+		
+	}
+	public static void main(String[] args) {
+		Fight(0);
+		double d=count/16.0;
+System.out.println(d);
+	}
+}
