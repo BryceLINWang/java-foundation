@@ -1,0 +1,86 @@
+public class Pro {
+	public String name;
+	public int id;
+	public int income;
+	public Pro() {
+		
+	}
+	public Pro(String name, int id,int income) {
+		this.name=name;
+		this.id=id;
+		this.income=income;
+	}
+	public void Work() {
+		System.out.println(this.name);
+		System.out.println(this.id);
+		System.out.println(this.income);
+	}
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	public int getIncome() {
+		return income;
+	}
+
+
+	public void setIncome(int income) {
+		this.income = income;
+	}
+
+
+	
+}
+//
+public class Jingli extends Pro{
+private int bonus;
+public Jingli() {
+	
+}
+public Jingli(String name, int id,int income,int bonus) {
+	this.name=name;
+	this.id=id;
+	this.income=income;
+	this.bonus=bonus;
+}
+
+
+public int getBonus() {
+	return bonus;
+}
+public void setBonus(int bonus) {
+	this.bonus = bonus;
+}
+public void Work() {
+	System.out.println(this.getName());
+	System.out.println(this.id);
+	System.out.println(this.income);
+	System.out.println(this.bonus);
+}
+}
+//
+public class T1 {
+	public static void main(String[] args) {
+		Pro r=new Pro("李四",121121,10000);
+		r.Work();
+		Jingli s=new Jingli("张三",120120,20000,5000);
+		s.Work();
+	}
+
+}
