@@ -1,0 +1,26 @@
+package 位运算;
+
+import java.util.Scanner;
+
+public class TTT {
+/**
+ * 输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。
+ */
+	public static int NumberOf1(int n) {
+	int t=1;
+	int count=0;//计数器
+	for(int i=0;i<32;i++) {//遍历计算机存储中32位
+		if((n&t)!=0) {//与t做按位与判断是否为1
+			count++;
+		}
+		t<<=1;//1右移以遍历每一位
+	}
+	System.out.println(count);
+	return count;
+	}
+	public static void main(String[] args) {
+	Scanner s= new Scanner(System.in);
+	int n=s.nextInt();
+	NumberOf1(n);
+	}
+}
