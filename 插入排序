@@ -1,0 +1,29 @@
+package 数组;
+
+import java.util.Arrays;
+
+public class 插入排序 {
+	public static void Charu(int []a) {
+		
+		int temp=0;//存数据的地方
+		int i=0;//
+		for(int j=1;j<a.length;j++) {//从第二个开始和第一个比
+			temp=a[j];//存数据
+			for(i=j-1;i>=0;i--) {
+				if(a[i]>temp) {//排从小到大 如果大，调换
+					a[i+1]=a[i];
+				}
+				else {
+					break;//否则跳出循环
+				}
+			}
+		a[i+1]=temp;//根据循环值不同，存放数据 如j=2 temp=5时，循环结束i=-1 a[0]=temp 
+		}
+		System.out.println(Arrays.toString(a)); //转换成字符串输出
+	}
+public static void main(String[] args) {
+	int []a= {20,33,5,64,7};
+	Charu(a);
+	
+}
+}
