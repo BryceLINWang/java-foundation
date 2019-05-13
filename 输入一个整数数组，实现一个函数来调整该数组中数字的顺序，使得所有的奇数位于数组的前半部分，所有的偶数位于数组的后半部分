@@ -1,0 +1,41 @@
+package 牛客;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class 调奇数 {
+public static void reOrderArray(int [] array) {
+	 int left=0;
+	    int right=array.length-1;
+	    int tmp=0;
+	  while(left<=right) {
+		  if(array[left]%2==1&&array[right]%2==0) {
+			  left++;
+			  right--;
+		  }
+		  else if(array[left]%2==1&&array[right]%2==1) {
+			  left++;
+		  }
+		  else if(array[left]%2==0&&array[right]%2==0) {
+			  right--;
+		  }
+		  else if(array[left]%2==0&&array[right]%2==1) {
+			  tmp=array[left];
+			  array[left]=array[right];
+			  array[right]=tmp;
+			  left++;
+			  right--;
+		  }
+	  }
+	  System.out.println(Arrays.toString(array)); 
+    }
+public static void main(String[] args) {
+	Scanner s=new Scanner(System.in);
+	int []a=new int [10];
+	System.out.println("输入一个长度为10的数组：");
+	for(int i=0;i<10;i++) {
+		a[i]=s.nextInt();
+	}
+	reOrderArray(a);
+}
+}
