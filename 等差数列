@@ -1,0 +1,32 @@
+package 内推;
+
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class 等差数列 {
+public static void main(String[] args) {
+	Scanner s=new Scanner(System.in);
+	System.out.println("输入数列长度：");
+	int n=s.nextInt();//输入数列长度
+	int []a=new int[n];//输入数列
+	System.out.println("输入数列元素：");
+	for(int i=0;i<n;i++) {
+		a[i]=s.nextInt();
+	}
+	Arrays.sort(a);//排序
+	Boolean flag=true;
+	int d=a[1]-a[0];
+	//判断剩下的元素差与上面是否相等
+	for(int j=2;j<a.length;j++) {
+		if(a[j]-a[j-1]!=d) {
+			flag =false;
+			System.out.println("Impossible");
+			break;
+		}
+	}
+	if(flag) {
+		System.out.println("Possible");
+	}
+}
+}
