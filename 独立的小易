@@ -1,0 +1,21 @@
+package 内推;
+
+import java.util.Scanner;
+
+public class 独立的小易 {
+public static void main(String[] args) {
+	Scanner s=new Scanner(System.in);
+	long x=s.nextInt();
+	long f=s.nextInt();
+	long d=s.nextInt();
+	long p=s.nextInt();
+	long day=0;
+	if(d/x<f) {
+		day=d/x;
+	}
+	else{
+	day=(d+f*p)/(x+p);
+	}
+	System.out.println(day);
+}
+}
