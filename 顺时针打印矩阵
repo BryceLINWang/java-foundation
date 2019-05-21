@@ -1,0 +1,52 @@
+package 牛客;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class 打印数组 {
+    public static ArrayList<Integer> printMatrix(int[][] matrix) {
+        ArrayList<Integer> a = new ArrayList<>();
+        if (matrix == null) {
+            return a;
+        }
+        int length = matrix.length;
+        int len = matrix[0].length;
+        if (length == 0 || len == 0) {
+            return a;
+        }
+        int up = 0;
+        int left = 0;
+        int down = matrix.length - 1;
+        int right = matrix[0].length - 1;
+        while(left<=right && up<=down) {
+
+            for (int i = left; i <= right; i++)
+                a.add(matrix[up][i]);
+            up++;
+            for (int i = up; i <= down; i++)
+                a.add(matrix[i][right]);
+            right--;
+            if (up - 1 != down) {
+                for (int i = right; i >= left; i--)
+                    a.add(matrix[down][i]);
+            }
+            down--;
+            if (left != right + 1) {
+                for (int i = down; i >= up; i--)
+                    a.add(matrix[i][left]);
+            }
+            left++;
+        }
+        return a;
+    }
+    public static void main(String []args){
+     int [][]a=new int[4][4];
+        Scanner s=new Scanner(System.in);
+    for(int i=0;i<4;i++){
+        for(int j=0;j<4;j++){
+            a[i][j]=s.nextInt();
+        }
+    }
+        System.out.println(printMatrix(a));
+    }
+}
