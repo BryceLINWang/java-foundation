@@ -1,0 +1,98 @@
+异常处理：
+用方法的特定返回值来表示异常情况，并将其打印出来。
+Java异常处理的优点：
+（1）把各种不同类型的异常情况进行分类，用Java类来表示异常情况，这种类被称为异常类。把异常情况表示成异常类，可以充分发挥类的可扩展和可重用的优势。
+（2）异常流程的代码和正常流程的代码分离，提高了程序的可读性，简化了程序的结构。
+（3）可以灵活的处理异常，如果当前方法有能力处理异常，就捕获并处理它，否则只需要抛出异常，由方法调用者来处理它
+具体操作实施：
+在下面的操作代码中可以看见，主函数代码为了方便使用运用了大量if..else做异常的反馈机制，过于麻烦，代码也有些冗余，还要程序员自己做异常判断。不够优化
+```java
+public class Caculate {
+
+    private  static boolean isNum(String num){
+        for(int i=0;i<num.length();i++){
+        char t=num.charAt(i);
+        if(t<48||t>57){
+            return false;
+        }
+        }
+        return true;
+    }
+    public static void main(String []args) {
+
+        if (args != null && args.length >= 2) {
+            String num1 = args[0];
+            String num2 = args[1];
+            if (isNum(num1) && isNum(num2)) {
+                int n1 = Integer.parseInt(num1);
+                int n2 = Integer.parseInt(num2);
+                if(n2!=0){
+                System.out.println((double) n1 / n2);
+                }else{
+                    System.out.println("除数不能为0");
+                }
+            } else {
+                System.out.println("两个参数必须是数字");
+            }
+        }else{
+                System.out.println("必须有命令行参数，且参数为两个");
+            }
+        }
+    }
+```
+于是这里我们使用了Java自身的异常处理机制
+在这里列举Java的异常处理机制：
+1、try···catch语句
+在try代码块中抛出异常之后，立即转到catch代码块执行或者退栈到上一层方法处寻找catch代码块。
+2、finally语句：任何情况下都必须执行的代码
+由于异常会强制中断正常流程，这会使得某些不管在任何情况下都必须执行的步骤被忽略，从而影响程序的健壮性。使用finally语句，不管try代码块中是否出现了异常，都会执行finally代码块。
+在某些情况下，把finally的操作放在try···catch语句的后面，这也能保证这个操作被执行。这种情况尽管在某些情况下是可行的，但不值得推荐，以为它有两个缺点：
+@把与try代码块相关的操作孤立开来，使程序结构松散，可读性差。
+@影响程序的健壮性。假如catch代码块继续抛出异常，就不会执行catch代码块之后的操作。
+3、throws子句：声明可能会出现的异常
+如果一个方法可能会抛出异常，但没有能力来处理这种异常，可以在方法声明处用throws子句来声明抛出异常。
+一个方法可能会出现多种异常，throws子句允许声明抛出多个异常，中间用“，”隔开。
+异常声明是接口（概念上的接口）的一部分，在JavaDoc文档中应描述方法可能抛出某种异常的条件。根据异常声明，方法调用者了解到被调用方法可能抛出的异常，从而采取相应的措施：捕获异常，或者声明继续抛出异常。
+4、throw语句：抛出异常
+throw语句用于抛出异常。
+值得注意的是，有throw语句抛出的对象必须是java.lang.Throwable类或者其他子类的实例。
+try....catch。
+```java
+public class Caculate1 {
+    public static void main(String []args) {
+     try {
+         String num1 = args[0];
+         String num2 = args[1];
+         int n1 = Integer.parseInt(num1);
+         int n2 = Integer.parseInt(num2);
+         System.out.println(n1 / n2);
+     }catch(Throwable e){//所有异常类的父类
+     //catch(Exception e){//程序员可处理异常可分为运行时异常（RuntimeException）{可处理可不处理，会打印出错误} 和非运行时异常/受控异常（）{不处理无法编译}
+         //System.out.println(e);
+     e.printStackTrace();//打印栈帧中信息
+     }
+    }
+}
+```
+throw抛出对象
+这里是自己构造的运行时异常
+```java
+public class 抛出 {
+    public static void main(String[] args){
+     try{
+         String num1 = args[0];
+         String num2 = args[1];
+         int n1 = Integer.parseInt(num1);
+         int n2 = Integer.parseInt(num2);
+         if(n2==5){
+             throw new RuntimeException("我這裏除5也不行");
+         }
+         System.out.println(n1/n2);
+      }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+不仅代码间接了很多，程序员还无需自己做一一判断，优化了工作。
