@@ -1,0 +1,18 @@
+package 牛客;
+
+import java.util.Scanner;
+
+public class 字符串最后一个字符长度 {
+	public static int ChangDu(String str) {
+		String[] a =str.split(" ");//以空格分割生成数组
+        return a[a.length-1].length();//判断数组最后一个字符串长度
+	}
+
+	public static void main(String[] args) {
+	Scanner s=new Scanner(System.in);
+	String Str=s.nextLine();//完成输入
+	System.out.println(ChangDu(Str));
+
+	}
+
+}
