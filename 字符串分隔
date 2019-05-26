@@ -1,0 +1,32 @@
+import java.util.Scanner;
+
+public class 字符串分隔 {
+	public static void Fenge(String str) {
+		int n=str.length();
+		StringBuffer s1=new StringBuffer(str);
+		if(s1 == null || s1.length() == 0) {
+			System.out.println(0);
+		}
+		 if(s1.length()%8 != 0){
+             while(s1.length()%8 != 0){
+                 s1.append("0");
+             }
+         }
+		int i = n / 8 + 1;
+		for (int j = 0; j < i; j++) {
+			if (j * 8 + 8 <= s1.length())
+			{
+				String s2 = s1.substring(j * 8, j * 8 + 8);
+				System.out.println(s2);
+			}
+		}
+	}
+public static void main(String[] args) {
+	Scanner s=new Scanner(System.in);
+	String str1=s.nextLine();
+	String str2=s.nextLine();
+	Fenge(str1);
+	Fenge(str2);
+	 
+}
+}
