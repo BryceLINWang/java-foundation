@@ -1,0 +1,21 @@
+package 牛客;
+
+import java.util.Scanner;
+
+public class 质数因子 {
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		while (s.hasNextLong()) {
+			long num = s.nextLong();
+			while (num != 1) {
+				for (int i = 2; i <= num; i++) {//从小到大遍历因数并进行因式分解
+					if (num % i == 0) {
+						num /= i;
+						System.out.print(i + " ");
+						break;
+					}
+				}
+			}
+		}
+	}
+}
