@@ -1,0 +1,32 @@
+输入一个链表，按链表值从尾到头的顺序返回一个ArrayList。
+public class ListNode {
+	int val;
+	ListNode next = null;
+
+	ListNode(int val) {
+		this.val = val;
+	}
+}
+//
+package 牛客;
+
+import java.util.ArrayList;
+
+public class 从尾到头打印链表 {
+	 public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
+		 ArrayList<Integer> list = new ArrayList<Integer>();
+	        ArrayList<Integer> list2 = new ArrayList<Integer>();
+	        ListNode n = listNode;
+	        while (n != null) {
+	        	 
+	            list.add(n.val);
+	            n=n.next;
+	 
+	        }
+	        for (int i = list.size() - 1; i >= 0; i--) {
+	            list2.add(list.get(i));
+	            System.out.println(list.get(i));
+	        }
+	        return list2;
+	 }
+}
