@@ -1,0 +1,27 @@
+package 牛客;
+
+class ListNode {
+    int val;
+    ListNode next = null;
+ 
+    ListNode(int val) {
+        this.val = val;
+    }
+}
+public class 反转链表 {
+	public ListNode ReverseList(ListNode head) {
+		if(head==null) {
+          return null;//head节点为空，返回空;
+	}
+		ListNode p = null;
+        ListNode q= null;//定义两个空指针记录节点
+        while(head!=null){//循环找到最后一个节点
+        	q=head.next;
+        	head.next=p;
+        	p=head;
+        	head=q;
+        }
+	return p;
+	}
+
+}
