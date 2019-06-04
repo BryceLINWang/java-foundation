@@ -1,0 +1,52 @@
+package 牛客;
+
+public class ListNode {
+	int val;
+	ListNode next = null;
+
+	ListNode(int val) {
+		this.val = val;
+	}
+}
+//////
+package 牛客;
+
+public class 合并两个排序的链表 {
+	public ListNode Merge(ListNode list1,ListNode list2) {
+		if (list1 == null) {
+			return list2;
+		}
+		if (list2 == null) {
+			return list1;
+		}
+		ListNode p = null;
+        ListNode q= null;
+
+		while (list1 != null && list2 != null) {//遍历
+			//将两个排序链表遍历比较排序
+			if (list1.val <= list2.val) {
+				if (p == null) {
+					p = q = list1;
+				} else {
+					q.next = list1;
+					q= q.next;
+				}
+				list1 = list1.next;
+			} else {
+				if (p == null) {
+					p = q = list2;
+				} else {
+					q.next = list2;
+					q = q.next;
+				}
+				list2 = list2.next;
+			}
+		}
+		if (list1 == null) {
+			q.next = list2;
+		} else {
+			q.next = list1;
+		}
+		return p;
+	}
+}
