@@ -1,0 +1,54 @@
+package 牛客;
+
+class RandomListNode {
+	int label;
+	RandomListNode next = null;
+	RandomListNode random = null;
+
+	RandomListNode(int label) {
+		this.label = label;
+	}
+}
+
+public class 复杂链表的复制 {
+	public RandomListNode Clone(RandomListNode pHead) {
+		if (pHead == null) {
+			return null;
+		}
+		RandomListNode node = pHead;
+		// A-B-C-D-E
+		// 实现结点next的复制
+		while (node != null) {
+			RandomListNode next = node.next;// 存放next
+			RandomListNode cloneNode = new RandomListNode(node.label);
+			// 克隆节点
+			node.next = cloneNode;
+			cloneNode.next = next;
+			node = next;// node更新到next结点
+		}
+		// 结点克隆完成后，每个节点紧跟的next首先为克隆节点
+		// A-A'-B-B'-C-C'-D-D'-E-E'
+		// 复制特殊指针
+		node = pHead;
+		while (node != null) {
+			if (node.random != null) {
+				node.next.random = node.random.next;
+			}
+			node = node.next.next;
+		}
+		// 整体复制完成目前是一个克隆连体，下一步完成分离。
+		node = pHead;
+		RandomListNode newHead = pHead.next;
+		while (node != null) {
+			RandomListNode cunnode = node.next;//存放节点
+			node.next = cunnode.next;//将原表的next转成原来的next
+			// 更新克隆结点的next
+			if (cunnode.next != null) {
+				cunnode.next = cunnode.next.next;
+			}
+			node = node.next;// node更新到next结点
+		}
+
+		return newHead;
+	}
+}
