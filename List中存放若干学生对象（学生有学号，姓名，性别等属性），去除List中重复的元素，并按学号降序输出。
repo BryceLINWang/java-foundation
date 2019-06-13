@@ -1,0 +1,120 @@
+```java
+package edu;
+
+import java.util.Objects;
+
+public class Student implements Comparable{
+    int code;
+    String name;
+    char sex;
+
+    public Student(int code, String name, char sex) {
+        this.code = code;
+        this.name = name;
+        this.sex = sex;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public char getSex() {
+        return sex;
+    }
+
+    public void setSex(char sex) {
+        this.sex = sex;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+//    @Override
+//    public int hashCode() {
+//        return new Integer(code).hashCode()+name.hashCode()+new Character(sex).hashCode();
+//    }
+
+//    @Override
+//    public boolean equals(Object obj) {
+//        if(obj instanceof  Student){
+//            Student s=(Student)obj;
+//            if(s.code==this.code&&
+//            s.name.equals(this.name)&&
+//            s.sex==this.sex){
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "code=" + code +
+                ", name='" + name + '\'' +
+                ", sex=" + sex +
+                '}';
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o instanceof Student) {
+            Student s = (Student) o;
+            if (this.code > s.code) return -1;
+            if (this.code < s.code) return 1;
+            return 0;
+        }
+        throw new RuntimeException("类型不匹配无法比较大小");
+    }
+
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return code == student.code &&
+                sex == student.sex &&
+                Objects.equals(name, student.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(code, name, sex);
+    }
+}
+
+```
+
+```java
+package edu;
+
+import java.util.*;
+
+public class Test111 {
+    public static void main(String[] args) {
+       List list =new ArrayList();
+        list.add(new Student(1000,"zhansgan",'M'));
+        list.add(new Student(1000,"zhansgan",'M'));
+    list.add(new Student(1001,"shshsid",'F'));
+        list.add(new Student(1002,"shdskdf",'M'));
+        list.add(new Student(1003,"dhfjisof",'M'));
+        list.add(new Student(1004,"hfujfodo",'M'));
+        System.out.println(list.size());
+        TreeSet treeSet=new TreeSet(list);
+        Iterator iter=treeSet.iterator();
+        while (iter.hasNext()){
+            System.out.println(iter.next());
+        }
+    }
+}
