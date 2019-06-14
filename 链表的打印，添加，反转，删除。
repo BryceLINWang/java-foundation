@@ -1,0 +1,92 @@
+package edu;
+
+import org.junit.Test;
+
+class Node{
+    public int val;
+    public Node next =null;
+    public Node(int val){
+        this.val=val;
+    }
+}
+public class Testaaa {
+    public static void display(Node head){
+        for(Node a=head;a!=null;a=a.next){
+            System.out.print("("+a.val+")->");
+        }
+        System.out.print("null");
+        System.out.printf("%n");
+    }
+    public static Node pushFront(Node head,int val) {//头插
+        Node newnode=new Node(val);
+        newnode.next=head;
+        return newnode;
+    }
+    public static Node pushBack(Node head,int val) {//尾插
+        if(head==null) {
+            return pushFront(head,val);
+        }else {
+            Node newnode=new Node(val);
+            Node last=getlast(head);
+            last.next=newnode;
+
+        }
+        return head;
+    }
+    public static Node getlast(Node head) {
+        Node a=head;
+        while(a.next!=null) {
+            a=a.next;
+        }
+        return a;
+    }
+    public static Node reverseList(Node head) {//链表反转
+        Node newList=null;
+        Node a=head;
+        while(a!=null) {
+            Node next=a.next;
+            a.next=newList;
+            newList=a;
+            a=next;
+        }
+        return newList;
+    }
+    public static Node remove(Node head,int val) {//删除
+        Node newlist=null;
+        Node a=head;
+        while(a!=null) {
+            Node next=a.next;
+            Node last=null;
+            if(a.val!=val) {
+                if(newlist==null) {
+                    a.next=newlist;
+                    newlist=a ;
+                }else {
+                    last=newlist;
+                    while(last.next!=null) {
+                        last=last.next;
+                    }
+                    last.next=a;
+                    a.next=null;
+                }
+            }
+            a=next;
+        }
+        return newlist;
+    }
+
+    public static void main(String[] args) {
+     Node head=null;
+        head = pushFront(head, 10);
+        head = pushFront(head, 11);
+        head = pushFront(head, 12);
+        display(head);
+        head=pushBack(head,13);
+        head=pushBack(head,14);
+        display(head);
+        head=remove(head,14);
+        display(head);
+        head=reverseList(head);
+        display(head);
+    }
+}
