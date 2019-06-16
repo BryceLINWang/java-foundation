@@ -1,0 +1,52 @@
+package edu.xlead;
+
+import java.util.Arrays;
+
+public class QuickSort {
+    /**
+     *
+     * @param arr 需要排序的数组
+     * @param left The leftmost index at the beginning
+     * @param right The rightmost index at the beginning =arr.length-1
+     */
+    public static  void quickSort(int []arr,int left,int right){
+        if(left>right){
+            return;
+        }
+        int tmp,tem;//Temporary variables
+        int i=left;
+        int j=right;
+        int temp=arr[left];//benchmark start with the leftmost index
+        while (i<j){
+            //From right to left
+            while (temp<=arr[j]&&i<j){
+                j--;
+            }
+            //From left to right
+            while (temp>=arr[i]&&i<j){
+                i++;
+            }
+            //SWAP
+            if (i<j){
+                tmp=arr[i];
+                tem=arr[j];
+                arr[i]=tem;
+                arr[j]=tmp;
+            }
+        }
+        //The loop is broken:i=j
+        //Put the reference point at the point of i
+        arr[left]=arr[i];
+        arr[i]=temp;
+        //Recurse to the left half arr
+        quickSort(arr,left,j-1);
+        //Recurse to the right half arr
+        quickSort(arr,j+1,right);
+    }
+
+    public static void main(String[] args) {
+        int []a={112,115,633,2578,268,225,245};
+        quickSort(a,0,a.length-1);
+        System.out.print(Arrays.toString(a));
+    }
+}
