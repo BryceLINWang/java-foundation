@@ -1,0 +1,349 @@
+```java
+package edu.xlead;
+
+import org.junit.Test;
+
+import java.io.*;
+import java.util.Date;
+
+public class TestIO {
+    /**
+     * 测试文件输出流
+     */
+    @Test
+    public void test1() throws Exception{
+        FileOutputStream fout=new FileOutputStream("D:\\jjj\\Idea\\流/a.txt");
+        int a = 20;//00000000 00000000 00000000 00010100
+        byte[] b = {0,0,0,20};
+        fout.write(b[0]);
+        fout.write(b[1]);
+        fout.write(b[2]);
+        fout.write(b[3]);
+        fout.close();//释放流的资源
+    }
+    @Test
+public void test2() throws Exception{
+    FileInputStream fin=new FileInputStream("D:\\jjj\\Idea\\流/a.txt");
+    byte[] b=new byte[4];
+    b[0]=(byte)fin.read();
+        b[1]=(byte)fin.read();
+        b[2]=(byte)fin.read();
+        b[3]=(byte)fin.read();
+        System.out.println(b[3]);
+        fin.close();//释放流的资源
+    }
+    @Test
+    public void test3() throws Exception{
+        OutputStream fout=new FileOutputStream("D:\\jjj\\Idea\\流/b.txt");
+    String mesg="Hello World !你好世界！";
+    byte[] ss=mesg.getBytes();
+    for (byte s:ss){
+        fout.write(s);
+    }
+    fout.close();
+    }
+    @Test
+    public void test4() throws Exception{
+        InputStream fin=new FileInputStream("D:\\jjj\\Idea\\流/b.txt");
+        byte[] b=new byte[fin.available()];//available 从文件头读到末尾-1
+        int t;
+        int i=0;
+        while((t=fin.read())!=-1){
+            b[i]=(byte)t;
+            i++;
+        }
+        String mesg=new String(b);
+        System.out.println(mesg);
+        fin.close();
+    }
+
+    /**
+     * 对象流 ObjectXXXStream
+     * @throws Exception
+     */
+    @Test
+    public void test6() throws Exception{
+        OutputStream fout=new FileOutputStream("D:\\jjj\\Idea\\流/b.txt");
+        ObjectOutputStream objout =new ObjectOutputStream(fout);
+        //objout.write(2);//不往设备里写，写到你new的fout里
+        objout.writeInt(222);//把整数转换成字节数组存放
+        objout.writeDouble(23.23);
+        objout.writeBoolean(true);
+        objout.writeChar('a');
+        objout.writeChars("ssdfgyuuuuuuid");
+        objout.flush();//流写的时候先写在缓存里，只有在对象流关闭或刷新时
+        objout.close();
+        fout.close();
+    }
+    @Test
+    public void test7() throws Exception{
+        InputStream fin=new FileInputStream("D:\\jjj\\Idea\\流/b.txt");
+        ObjectInputStream objin=new ObjectInputStream(fin);
+
+        int tt=objin.readInt();
+        System.out.println(tt);
+        double tt1=objin.readDouble();
+        System.out.println(tt1);
+        boolean tt2=objin.readBoolean();
+        System.out.println(tt2);
+        char tt3=objin.readChar();
+        System.out.println(tt3);
+
+        fin.close();
+    }
+    @Test
+    public void test8() throws Exception{
+        OutputStream fout=new FileOutputStream("D:\\jjj\\Idea\\流/b.txt");
+        //转换字节
+        ObjectOutputStream objout =new ObjectOutputStream(fout);
+        Date d=new Date();
+        objout.writeObject(d);
+        Student s=new Student(2000,"张三");
+        objout.writeObject(s);
+       // objout.writeObject(d);
+        objout.flush();
+        objout.close();
+        fout.close();
+    }
+    @Test
+    public void test9() throws Exception{
+        InputStream fin=new FileInputStream("D:\\jjj\\Idea\\流/b.txt");
+        ObjectInputStream objin=new ObjectInputStream(fin);
+        Date d=(Date)objin.readObject();
+        System.out.println(d);
+        Student s=(Student)objin.readObject();
+        System.out.println(s);//对象流要严格按照顺序读写
+        fin.close();
+    }
+    @Test
+    public void test10() throws Exception{
+//        //低级流
+//        OutputStream fout=new FileOutputStream("D:\\jjj\\Idea\\流/b.txt");
+//        //缓存流
+//        BufferedOutputStream bout=new BufferedOutputStream(fout);
+////        //加缓存，bout先写到缓存里
+//        //fout.write(22);//转换成字节写文件里
+//        bout.write(22);//写到缓存里，性能好
+//        //bout.flush();//刷新后到文件里
+        //高级liu
+        //转换字节
+//ObjectInputStream objin=new ObjectInputStream(fin);
+        ObjectOutputStream objout=new ObjectOutputStream(
+                new BufferedOutputStream(
+                        new FileOutputStream("D:\\jjj\\Idea\\流/b.txt")
+                )
+        );
+        Date d=new Date();
+        objout.writeObject(d);
+        Student s=new Student(2000,"张三");
+        objout.writeObject(s);
+        // objout.writeObject(d);
+        objout.flush();
+        objout.close();
+    }
+    @Test
+    public void test11() throws Exception{
+        //InputStream fin=new FileInputStream("D:\\jjj\\Idea\\流/b.txt");
+        ObjectInputStream objin=new ObjectInputStream(
+                new BufferedInputStream(
+                        new FileInputStream("D:\\jjj\\Idea\\流/b.txt")
+                )
+        );
+        Date d=(Date)objin.readObject();
+        System.out.println(d);
+        Student s=(Student)objin.readObject();
+        System.out.println(s);//对象流要严格按照顺序读写
+        objin.close();
+    }
+}
+```
+
+```java
+ackage edu.xlead;
+
+import org.junit.Test;
+
+import java.io.*;
+
+public class TestIO2 {
+    @Test
+    public void test1()throws Exception{
+        //字节流处理字符，处理慢，且一次一个字节 java中一个字符两个字节
+        //字符流一次两个
+
+        FileInputStream fin=new FileInputStream("D:\\jjj\\Idea\\流/a.txt");
+        int a;
+        while ((a=fin.read())!=-1){
+            System.out.println((char) a);
+        }
+        fin.close();
+    }
+    @Test
+    public void test2()throws Exception{
+        //字符流
+        FileWriter w =new FileWriter("D:\\jjj\\Idea\\流/a.txt");
+//        w.write('A');
+//        w.write('中');
+        w.write("Helllo World !中国中文!");
+        w.close();
+    }
+    @Test
+    public void test3()throws Exception{
+        //Reader读一次一个
+        FileReader fr=new FileReader("D:\\jjj\\Idea\\流/a.txt");
+        int a;
+        while ((a=fr.read())!=-1){
+            System.out.print((char) a);
+        }
+        fr.close();
+    }
+    @Test
+    public void test4()throws Exception{
+        BufferedWriter bw=new BufferedWriter(
+                new FileWriter("D:\\jjj\\Idea\\流/a.txt")
+        );
+        bw.write("Helllo World !中国中文!");
+        bw.close();
+    }
+    @Test
+    public void test5()throws Exception{
+        BufferedReader br=new BufferedReader(
+                new FileReader("D:\\jjj\\Idea\\流/a.txt")
+        );
+     String mesg=br.readLine();
+        System.out.println(mesg);
+        br.close();
+    }
+    @Test
+    //这个单元测试里没法写
+    public void test6()throws Exception {
+        //高级流 把字节流包装成字符流
+    InputStreamReader ir=new InputStreamReader(System.in);//s.in从键盘读字节
+    BufferedReader br =new BufferedReader(ir);
+    String mesg=br.readLine();
+        System.out.println(mesg);
+    }
+    @Test
+    public void test7()throws Exception {
+      OutputStreamWriter w=new OutputStreamWriter(System.out);//写到显示器里，命令行显示，标准流一般不要关闭
+      BufferedWriter bw =new BufferedWriter(w);
+      bw.write("中国");
+      bw.flush();
+      bw.close();
+    }
+    @Test
+    public void test8()throws Exception {
+        PrintStream ps=new PrintStream("D:\\jjj\\Idea\\流/bb.txt");
+        ps.println("hello world");
+        System.out.println();
+        ps.flush();
+        ps.close();
+    }
+    @Test
+    public void test9()throws Exception {
+       PrintWriter pw =new PrintWriter("D:\\jjj\\Idea\\流/bb.txt");
+    pw.println(20+"你好"+23.23432);
+    pw.flush();
+    pw.close();
+    }
+    @Test
+    public void test10()throws Exception {
+        File f=new File("D:\\sdfsad\\a.txt");
+        if(f.exists()) {
+            System.out.println("存在");
+        }else{
+            System.out.println("不存在");
+            f.mkdirs();//创建目录
+        }
+    }
+    @Test
+    public void test11()throws Exception {
+        File f=new File("D:\\作业\\a.txt");
+        if(f.exists()) {
+            System.out.println("存在");
+        }else{
+            System.out.println("不存在");
+            f.createNewFile();//创建文件
+             }
+    }
+    @Test
+    public void test12()throws Exception {
+    File f =new File("D:\\作业\\a.txt");
+        System.out.println(f.isDirectory());
+        System.out.println(f.isFile());
+    }
+    @Test
+    public void test13()throws Exception {
+        File f=new File("D:\\作业");
+        if(f.isDirectory()){
+            System.out.println("["+f.getName()+"]");
+        }else{
+            System.out.println(f.getName());
+        }
+        File [] fs=f.listFiles();
+        if(fs!=null&&fs.length>0){
+            listFile(fs,1);
+        }
+    }
+    private  void writeBlank(int level){
+        for(int i=0;i<level;i++){
+            System.out.print(" ");
+        }
+    }
+    private void  listFile(File[] fs,int level){
+        for(File f:fs){
+            writeBlank(level);
+            if(f.isDirectory()){
+                System.out.println("["+f.getName()+"]");
+                File[] ff=f.listFiles();
+                if(ff!=null&&ff.length>0){
+                    listFile(ff,++level);
+                }
+            }else{
+                System.out.println(f.getName());
+            }
+        }
+    }
+}
+```
+
+```java
+package edu.xlead;
+
+import java.io.Serializable;
+
+public class Student implements Serializable {
+    private int id;
+    private String name;
+
+    public Student(int id,String name ) {
+        this.id = id;
+        this.name=name;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+}
+
+```
