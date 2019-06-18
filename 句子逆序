@@ -1,0 +1,21 @@
+package 牛客;
+
+import java.util.Scanner;
+
+public class 句子逆序 {
+	public static void main(String[] args) {
+		Scanner s=new Scanner(System.in);
+		while(s.hasNext()) {//Detection of the input
+			String str=s.nextLine();
+			int len=str.length();
+			String []str1=str.split(" ");
+			StringBuilder sb=new StringBuilder();
+			//Reverse output
+			for(int i=str1.length-1;i>=0;i--) {
+				sb.append(str1[i]+" ");
+			}
+			System.out.println(sb);
+		}
+	}
+
+}
