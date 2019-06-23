@@ -1,0 +1,38 @@
+package 牛客;
+
+import java.math.BigInteger;
+import java.util.HashSet;
+import java.util.Set;
+
+public class 平方十位数1 {
+    public static void main(String[] args) {
+        /**
+         * 枚举范围[1026753849,9999999999]
+         * 减小范围遍历平方根[30000,100000]
+         * 查找最大逆序遍历从i=100000开始--判断是否包含0~9十个数字
+         *
+         * @param args
+         */
+//        BigInteger[] a = new BigInteger[10];
+//        int l=0;
+            for (int i = 100000; i >= 30000; i--) {
+                String max = String.valueOf(BigInteger.valueOf(i).multiply(BigInteger.valueOf(i)));//得到一个平方数
+                //判断包含数字是否为0~9的不重复十个数字
+                if (Judge(max)) {
+                    System.out.println(max);
+                    break;
+                }
+                }
+    }
+    public static boolean Judge(String s) {
+        StringBuffer sb = new StringBuffer(s);
+        Set set = new HashSet();
+        for (int j = 0; j < sb.length(); j++) {
+            set.add(sb.substring(j,j+1));
+        }
+        if (set.size() == s.length()) {
+            return true;
+        }
+        return false;
+        }
+    }
