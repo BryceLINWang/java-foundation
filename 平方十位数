@@ -1,0 +1,45 @@
+package 牛客;
+
+import java.math.BigInteger;
+import java.util.HashSet;
+import java.util.Set;
+
+public class 平方十位数 {
+    private String max;
+
+    /**
+     * 枚举范围[1026753849,9999999999]
+     * 减小范围遍历平方根[30000,100000]
+     * 查找最大逆序遍历从i=100000开始--判断是否包含0~9十个数字
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        for (int i = 100000; i >= 30000; i--) {
+            String max = String.valueOf(BigInteger.valueOf(i).multiply(BigInteger.valueOf(i)));//得到一个平方数
+            //判断包含数字是否为0~9的不重复十个数字
+            if (Judge(max)) {
+                System.out.println(max);
+                break;
+            }
+        }
+    }
+    //str长度应为1，0~9不重复，先检测长度，再判断是否包含0~9的所有数字
+
+    public static boolean Judge(String s) {
+        if(s.length()>10){//s长度大于十returnfalse
+            return false;
+        }
+        int[] a = new int[10];//建立一个长度为10的int型数组
+        for (int i = 0; i< s.length(); i++) {
+            int index = (int) s.charAt(i) - '0';//将max字符串给遍历赋值给数组索引
+            a[index] += 1;//赋值过索引的a自增
+        }
+        for(int i=0;i<10;i++) {//遍历a数组
+            if (a[i] != 1) {//如果某个a[i]！=0证明max没有包含0~9中某个数字
+        return false;
+            }
+        }
+        return true;
+    }
+}
