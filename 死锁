@@ -1,0 +1,56 @@
+**死锁概念**
+所谓死锁是指多个并发进程，各自持有资源又都等待别的进程释放所拥有的资源，在未改变这种状态之前不能向前推进，这种状态称为死锁，死锁产生的根本原因是系统资源不足。
+
+**死锁的必要条件**
+互斥：每个资源要么已经分配给了一个进程，要么就是可用的。
+占有和等待：已经得到了某个资源的进程可以再请求新的资源。
+不可抢占：已经分配给一个进程的资源不能强制性地被抢占，它只能被占有它的进程显示地释放。
+环路等待：有两个或者两个以上的进程组成一条环路，该环路中的每个进程都在等待下一个进程所占有的资源
+
+```java
+package edu.xalead;
+
+
+
+class TTT extends  Thread{
+    private Integer p1=null;
+    private Integer p2=null;
+    private String name=null;
+    public TTT(Integer p1,Integer p2,String name){
+this.p1=p1;
+this.p2=p2;
+this.name=name;
+    }
+    public void run(){
+        try {
+            if("张三".equals(this.name)){
+            synchronized (p1){
+                Thread.sleep(1);
+                synchronized (p2){
+
+                }
+            }
+            }else{
+                synchronized (p2){
+                    Thread.sleep(1);
+                    synchronized (p1){
+
+                    }
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+public class 死锁 {
+    public static void main(String[] args) {
+        Integer p1 = 10;
+        Integer p2 = 22;
+        TTT t1 = new TTT(p1,p2,"张三");
+        TTT t2 = new TTT(p1,p2,"李四");
+
+        t1.start();
+        t2.start();
+    }
+}
