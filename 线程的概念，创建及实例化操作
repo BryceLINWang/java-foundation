@@ -1,0 +1,93 @@
+**操作系统中线程和进程的概念**
+我们现在所用的操作系统为多任务操作系统。
+而多线程便是实现多任务的一种方式。
+**进程**
+指一个内存中运行的应用程序，每个进程都有自己独立的一块内存空间，一个进程中可以启动多个线程。比如在Windows系统中，一个运行的exe就是一个进程。
+**线程**
+是指进程中的一个执行流程，一个进程中可以运行多个线程。比如java.exe进程中可以运行很多线程。线程总是属于某个进程，进程中的多个线程共享进程的内存。
+
+但其实线程并不是同时进行的，只是运行速度等因素给我们造成了“同时”的假象，他们之间实际上是轮换执行。
+ 
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2019062418395572.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNDE2MjI2,size_16,color_FFFFFF,t_70)
+ **Java中的线程**
+在Java中，“线程”指两件不同的事情：
+1、java.lang.Thread类的一个实例；
+2、线程的执行。
+ 使用java.lang.Thread类或者java.lang.Runnable接口编写代码来定义、实例化和启动新线程。
+一个Thread类实例只是一个对象，像Java中的任何其他对象一样，具有变量和方法。
+Java中，每个线程都有一个调用栈，即使不在程序中创建任何新的线程，线程也在后台运行着。
+一个Java应用总是从main()方法开始运行，mian()方法运行在一个线程内，它被称为主线程。
+一旦创建一个新的线程，就产生一个新的调用栈。
+
+**Java线程：创建与启动**
+一、定义线程
+
+1、扩展java.lang.Thread类。
+
+ 此类中有个run()方法，应该注意其用法：
+public void run()
+如果该线程是使用独立的Runnable运行对象构造的，则调用该Runnable对象的run方法；否则，该方法不执行任何操作并返回。
+
+ Thread的子类应该重写该方法。
+2、实现java.lang.Runnable接口。
+void run(
+使用实现接口Runnable的对象创建一个线程时，启动该线程将导致在独立执行的线程中调用对象的run方法。
+方法run的常规协定是，它可能执行任何所需的操作。
+实例化操作
+
+```java
+package edu.xalead;
+
+class T extends Thread{//线程类专用于管理线程
+    private Integer i=null;
+    public T(Integer i){
+        this.i=i;
+    }
+    public  void  run(){
+        int i=0;
+        for (;;){
+            System.out.println(i++);
+        }
+    }
+}
+public class 线程示例1 {
+    public static void main(String[] args) {//主线程 线程由主线程启动
+        Integer i=0;
+        T t=new T(i);
+        T t1=new T(i);//线程new了后才会分配空间
+        //t.run();//不能这样执行 要分时
+        t.start();
+        t1.start();
+    }
+}
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20190624184347880.png)
+
+```java
+package edu.xalead;
+class T1 implements Runnable{
+    private Integer i=null;
+    public T1(Integer i){
+        this.i=i;
+    }
+    public  void  run(){
+        int i=0;
+        for (;;){
+            System.out.println(i++);
+        }
+    }
+}
+public class 线程示例2 {
+    public static void main(String[] args) {//主线程 线程由主线程启动
+        Integer i = 0;
+        T1 t = new T1(i);
+        T1 t1 = new T1(i);//线程new了后才会分配空间
+        //t.run();//不能这样执行 要分时
+        Thread tt=new Thread(t);
+        tt.start();
+        Thread tt1=new Thread(t1);
+        tt1.start();
+    }
+}
+
+```
