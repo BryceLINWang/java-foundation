@@ -1,0 +1,101 @@
+```java
+package comunication;
+
+public class 包子笼 {
+    public int pack=100;
+
+    /**
+     * 同步方法监视的对象是this
+     * @param name
+     */
+//    public synchronized void eat(String name){
+//            System.out.println(name + "吃第" + this.pack + "个包子");
+//            this.pack--;
+//
+//    }
+}
+```
+
+```java
+package comunication;
+
+//import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
+public class 吃包子的 extends Thread{
+    private 包子笼 p=null;
+    private  String name=null;
+    public 吃包子的(包子笼 p, String name){
+        this.p=p;
+        this.name=name;
+    }
+//    public void eat(){
+//        synchronized (p){
+//                System.out.println(this.name + "吃第" + this.p.pack + "个包子");
+//                this.p.pack--;
+//            }
+//    }
+public void run(){
+    try {
+        while (true) {
+            synchronized (p){
+            if (this.p.pack <= 0){
+                p.notify();
+            p.wait();
+            }else{
+                System.out.println(this.name+"吃第" + this.p.pack + "个包子");
+                this.p.pack--;
+            }
+        }
+        Thread.sleep(1);
+        }
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+}
+}
+```
+
+```java
+package comunication;
+
+public class 做包子的 extends Thread {
+    private 包子笼 p=null;
+    private String name=null;
+    public 做包子的(包子笼 p,String name){
+        this.p=p;
+        this.name=name;
+    }
+    public void run(){
+        try {
+            while(true) {
+                synchronized (p) {
+                    if (p.pack <= 0) {
+                        p.pack = 100;
+                        System.out.println(this.name + "做好了" + p.pack + "个包子");
+                    } else {
+                           p.notifyAll();
+                           p.wait();
+                    }
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+```
+
+```java
+package comunication;
+
+public class 测试吃包子 {
+    public static void main(String[] args) {
+        包子笼 p=new 包子笼();
+        做包子的 m=new 做包子的(p,"王大楚");
+        吃包子的 p1=new 吃包子的(p,"张三");
+        吃包子的 p2=new 吃包子的(p,"李四");
+       p1.start();
+       p2.start();
+       m.start();
+    }
+}
