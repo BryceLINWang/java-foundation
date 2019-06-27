@@ -1,0 +1,47 @@
+**yield()方法**
+yield()方法可以让当前正在执行的线程暂停，但它不会阻塞该线程，它只是将该线程从运行状态转入就绪状态。
+只是让当前的线程暂停一下，让系统的线程调度器重新调度一次。
+很有可能，当某个线程调用了yield()方法暂停之后进入就绪状态，它又马上抢占了CPU的执行权，继续执行。
+
+实际上，当某个线程调用了yield()方法暂停之后，只有优先级与当前线程相同，或者优先级比当前线程更高的处于就绪状态的线程才会获得执行的机会
+**curentThread()方法**
+currentThread()方法可以返回段正在被哪个线程调用的信息。
+Thread.currentThread().getName()获得的始终是执行start()方法的线程（或者说是调用run()方法的线程）。
+实例化代码
+```java
+package comunication;
+
+class TH1 extends Thread{
+    TH1(){
+        super.setName("让步线程");
+    }
+    @Override
+    public void run(){
+        for(int i=0;i<1000;i++){
+            if (i%4 == 0){
+                Thread.yield();//当前线程让步
+             }
+
+            System.out.println(this.getName());
+        }
+    }
+}
+class TH2 implements  Runnable{
+    @Override
+    public void run(){
+        for(int i=0;i<2000;i++){
+            System.out.println(Thread.currentThread().getName());//得到当前线程的引用
+        }
+    }
+}
+public class 让步 {
+    public static void main(String[] args) {
+        TH1 t=new TH1();
+        t.start();
+       TH2 th=new TH2();
+        Thread t1=new Thread(th);
+        t1.start();
+    }
+}
+
+```
