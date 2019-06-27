@@ -1,0 +1,36 @@
+线程的“优先级”将线程的重要性传递给了调度器。尽管CPU处理现有线程集的顺序是不确定的。但是调度器将倾向于让优先权最高的线程先执行。然而，这并不意味着优先权较低的线程将得不到执行（也就是说，优先权不会导致死锁）。优先级较低的线程，仅仅是执行的频率较低。
+
+在绝大多数的时间里，所有线程都应该以默认的优先级运行。
+
+Java中优先级有以下三种级别三种级别：
+
+Thread.MIN_PRIORITY = 1
+Thread.NORM_PRIORITY = 5
+Thread.MAX_PRIORITY = 10
+
+```java
+package comunication;
+
+class  TS implements Runnable {
+    @Override
+    public void run() {
+        while (true) {
+            System.out.println(Thread.currentThread().getName());
+        }
+    }
+}
+public class 优先级 {
+    public static void main(String[] args) {
+        Thread t1=new Thread(new TS(),"A");
+        Thread t2=new Thread(new TS(),"B");
+        Thread t3=new Thread(new TS(),"C");
+        t1.setPriority(Thread.MAX_PRIORITY);//优先级要在start前写范围1~10 NORM为5
+        t2.setPriority(Thread.MIN_PRIORITY);
+        t3.setPriority(Thread.MIN_PRIORITY);
+        t1.start();
+        t2.start();
+        t3.start();
+    }
+}
+
+```
