@@ -1,0 +1,60 @@
+格式：以加入main线程为例
+
+线程对象t.join()   无参数，则main线程一直暂停，直到t线程运行结束。
+
+线程对象t.join(时间t)   有参数，则main线程每隔t时间暂停一次，直到B线程运行结束。
+
+实例化：
+不加join
+```java
+package comunication;
+
+class TTT1 implements Runnable{
+@Override
+public void run() {
+    while (true) {
+        System.out.println(Thread.currentThread().getName());
+    }
+    }
+}
+public class 加入 {
+    public static void main(String[] args)throws Exception {
+        Thread t = new Thread(new TTT1());
+        t.start();
+
+//        t.join();
+
+        while (true) {
+            System.out.println(Thread.currentThread().getName());
+        }
+    }
+}
+```
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2019062715473676.png)
+加join
+```java
+package comunication;
+
+class TTT1 implements Runnable{
+@Override
+public void run() {
+    while (true) {
+        System.out.println(Thread.currentThread().getName());
+    }
+    }
+}
+public class 加入 {
+    public static void main(String[] args)throws Exception {
+        Thread t = new Thread(new TTT1());
+        t.start();
+
+        t.join();
+
+        while (true) {
+            System.out.println(Thread.currentThread().getName());
+        }
+    }
+}
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2019062715510366.png)
