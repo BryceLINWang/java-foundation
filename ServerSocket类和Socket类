@@ -1,0 +1,93 @@
+**ServerSocket类** 
+Socket类代表一个客户端套接字，即任何时候你想连接到一个远程服务器应用的时候你构造的套接字，现在，假如你想实施一个服务器应用，例如一个HTTP服务器或者FTP服务器，你需要一种不同的做法。这是因为你的服务器必须随时待命，因为它不知道一个客户端应用什么时候会尝试去连接它。为了让你的应用能随时待命，你需要使用java.net.ServerSocket类。这是服务器套接字的实现。
+    ServerSocket和Socket不同，服务器套接字的角色是等待来自客户端的连接请求。一旦服务器套接字获得一个连接请求，它创建一个Socket实例来与客户端进行通信。
+    要创建一个服务器套接字，你需要使用ServerSocket类提供的四个构造方法中的一个。你需要指定IP地址和服务器套接字将要进行监听的端口号。通常，IP地址将会是127.0.0.1，也就是说，服务器套接字将会监听本地机器。服务器套接字正在监听的IP地址被称为是绑定地址。服务器套接字的另一个重要的属性是backlog，这是服务器套接字开始拒绝传入的请求之前，传入的连接请求的最大队列长度。
+ServerSocket(int port) 
+创建绑定到特定端口的服务器套接字。
+accept() 
+侦听并接受到此套接字的连接。
+getInetAddress() 
+返回此服务器套接字的本地地址。
+
+**Socket编程步骤**
+ 套接字是网络连接的一个端点。套接字使得一个应用可以从网络中读取和写入数据。放在两个不同计算机上的两个应用可以通过连接发送和接受字节流。为了从你的应用发送一条信息到另一个应用，你需要知道另一个应用的IP地址和套接字端口。在Java里边，套接字指的是java.net.Socket类。
+    要创建一个套接字，你可以使用Socket类众多构造方法中的一个。其中一个接收主机名称和端口号：
+    **Socket类**
+Socket(InetAddress address, int port) 
+创建一个流套接字并将其连接到指定 IP 地址的指定端口号。
+Socket(String host, int port) 
+创建一个流套接字并将其连接到指定主机上的指定端口号。
+Socket(InetAddress address, int port, InetAddress localAddr, int localPort) 
+创建一个套接字并将其连接到指定远程地址上的指定远程端口。
+Socket(String host, int port, InetAddress localAddr, int localPort) 
+创建一个套接字并将其连接到指定远程主机上的指定远程端口。
+一旦你成功创建了一个Socket类的实例，你可以使用它来发送和接受字节流。要发送字节流，你首先必须调用Socket类的getOutputStream方法来获取一java.io.OutputStream对象。要发送文本到一个远程应用，你经常要从返回的OutputStream对象中构造一个java.io.PrintWriter对象。要从连接的另一端接受字节流，你可以调用Socket类getInputStream方法用来返回一个java.io.InputStream对象。
+服务器端创建ServerSocket对象，调用accept方法返回Socket对象
+客户端创建Socket对象，通过端口连接到服务器
+客户端、服务器端都使用Socket中的getInputStream方法和getOutputStream方法获得输入流和输出流，进一步进行数据读写操作
+```java
+package edu;
+
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class Hxzz {
+    public static void main(String[] args) throws Exception{
+        ServerSocket s=null;
+        s= new ServerSocket(8888);
+        System.out.println("等待连接");
+        Socket ss=s.accept();//监听
+        System.out.println("已经有连接");
+        InputStream input=ss.getInputStream();
+        OutputStream output =ss.getOutputStream();
+
+        PrintWriter pw=new PrintWriter(output);
+        pw.println("你好\n");
+        pw.flush();
+    }
+}
+```
+
+```java
+package edu;
+
+import java.io.*;
+import java.net.Socket;
+
+public class Client {
+    public static void main(String[] args)throws IOException {
+        Socket s =new Socket("127.0.0.1",8888);//new 了就开始连接
+        InputStream input=s.getInputStream();
+        OutputStream output =s.getOutputStream();
+
+        BufferedReader br=new BufferedReader(
+                new InputStreamReader(input)
+        );
+String str=br.readLine();
+        System.out.println(str);
+    }
+}
+
+```
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20190628165318119.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20190628165358860.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20190628165416238.png)
+close() 
+关闭此套接字。
+connect(SocketAddress endpoint) 
+将此套接字连接到服务器。
+connect(SocketAddress endpoint, int timeout) 
+将此套接字连接到服务器，并指定一个超时值。
+getInetAddress() 
+返回套接字连接的地址。
+getInputStream() 
+返回此套接字的输入流。
+getLocalPort() 
+返回此套接字绑定到的本地端口。
+getOutputStream() 
+返回此套接字的输出流。
+getPort() 
+返回此套接字连接到的远程端口。
