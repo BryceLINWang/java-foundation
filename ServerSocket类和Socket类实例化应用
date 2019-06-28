@@ -1,0 +1,149 @@
+使用流进行信息的传输，注意读写顺序要一致，读写方法具有对象针对性使用正确的的读写方法。如 writeInt readInt
+下面的代码使用进程管理的方法实现Server的不间断操作。并且当有多个客户机时，可用进程管理的方式调和避免冲突。
+```java
+package net;
+
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
+class Service implements Runnable{
+   private ServerSocket server=null;
+    private Socket s=null;
+    private InputStream input=null;
+    private OutputStream output=null;
+    private ObjectOutputStream objout= null;
+    private PrintWriter pw=null;
+    public Service(Socket s){
+        this.s=s;
+    }
+    @Override
+    public void run(){
+        try {
+            input=s.getInputStream();
+            output=s.getOutputStream();
+            objout =new ObjectOutputStream(output);
+            pw=new PrintWriter(output);
+            Student ss=new Student(2232,"顾城");
+            //发一个整数
+            objout.writeInt(200);
+            //发一个浮点数
+            objout.writeDouble(324.324);
+            //发一个字符串
+//            pw.println("Lose Yourself");
+//            //发一个学生对象
+            objout.writeObject(ss);
+//            pw.flush();
+            objout.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+public class ObjectServer {
+
+    public static void main(String[] args) {
+        ServerSocket server=null;
+        Socket s=null;
+        InputStream input=null;
+        OutputStream output=null;
+        ObjectOutputStream objout= null;
+        PrintWriter pw=null;
+        try {
+            server = new ServerSocket(9999);
+            System.out.println("监听客户连接。。。");
+            while (true) {
+                s=server.accept();//监听
+                System.out.println("已监听到客户连接[远程主机："+
+                        s.getRemoteSocketAddress()
+                        +":端口:"+s.getPort()+"]");
+        new Thread(new Service(s)).start();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+}
+
+```
+
+```java
+package net;
+
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class ObjectClient {
+    public static void main(String[] args) {
+        Socket s=null;
+        String ip="192.168.50.3";
+        int port=9999;
+        InputStream input=null;
+        OutputStream output=null;
+          ObjectInputStream objin=null;
+
+        try {
+            s=new Socket(ip,port);
+            input=s.getInputStream();
+            output=s.getOutputStream();
+            objin =new ObjectInputStream(input);
+            System.out.println(objin.readInt());
+            System.out.println(objin.readDouble());
+//            BufferedReader br=new BufferedReader(
+//                    new InputStreamReader(input)
+//            );
+//            String str=br.readLine();
+//            System.out.println(str);
+            System.out.println(objin.readObject());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+}
+```
+
+```java
+package net;
+
+import java.io.Serializable;
+
+public class Student implements Serializable {
+ private    int id;
+   private String name;
+   public Student(){
+
+   }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    public Student(int id, String name) {
+        this.id = id;
+        this.name=name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+}
+
+```
