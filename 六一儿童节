@@ -1,0 +1,38 @@
+package 牛客;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class 六一儿童节 {
+    public static void main(String[] args) {
+        Scanner s=new Scanner(System.in);
+        while (s.hasNext()) {
+            int n = s.nextInt();//学生个数
+            int[] h = new int[n];//h[]
+            for (int i = 0; i < h.length; i++) {
+                h[i] = s.nextInt();
+            }
+            int m = s.nextInt();//巧克力数
+            int[] w = new int[m];//w[]
+            for (int i = 0; i < w.length; i++) {
+                w[i] = s.nextInt();
+            }
+            Arrays.sort(h);
+            Arrays.sort(w);
+            int count = 0;
+            int tmp = 0;
+            for (int i = 0; i < w.length; i++) {
+                if (w[i] < h[tmp]) {//排序后最小和最小比
+                    continue;
+                } else {
+                    count++;
+                    tmp++;
+                }
+                if (tmp == n) {
+                    break;
+                }
+            }
+            System.out.println(count);
+        }
+    }
+}
